@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://goosefire.shop/sitemap.xml
+Sitemap: https://www.goosefire.shop/sitemap.xml
