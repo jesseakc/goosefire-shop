@@ -337,9 +337,17 @@ figure.wide figcaption {
 .site-foot { background: var(--ink); color: #CFC9BE; margin-top: var(--sp-5); }
 .site-foot .fine { color: #A8A199; }
 .site-foot strong { color: var(--paper); }
-.site-foot a { color: #E6E2D8; }
-.site-foot a:hover { color: #fff; }
-.site-foot nav a[aria-current="page"] { color: var(--bisque); }
+/* These must out-specify the light-background `.site-head nav a, .site-foot nav a`
+   rule at the top of this file, which is (0,1,2) and therefore wins over a bare
+   `.site-foot a` — that bug put the footer links at 2.31:1 and hover at 2.87:1,
+   both under AA. Equal-specificity order alone is not enough; be explicit. */
+.site-foot a,
+.site-foot nav a { color: #E6E2D8; }
+.site-foot a:hover,
+.site-foot nav a:hover { color: #FFFFFF; }
+.site-foot nav a[aria-current="page"],
+.site-foot a[aria-current="page"] { color: var(--bisque); }
+.site-foot .fine, .site-foot .fine a { color: #A8A199; }
 .site-foot .mark { height: 1.3rem; }
 .foot-brand { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; }
 .foot-brand .wm-text { font-size: var(--step-0); letter-spacing: .04em; }
@@ -363,9 +371,14 @@ figure.wide figcaption {
 .section-note { color: var(--text-soft); max-width: 46ch; }
 
 /* --- 1. portrait hero: face + hands + piece survive the crop --- */
-.hero--portrait { max-height: none; }
+/* Keep a min-height: the text block is ~430px tall on a phone, and a 16:10
+   image at 375px wide is only ~211px — without this the kicker and headline
+   get clipped by the hero's overflow:hidden. */
+.hero--portrait { min-height: 30rem; }
+@media (max-width: 48rem) { .hero--portrait { min-height: 34rem; } }
 .hero-portrait {
-  width: 100%;
+  width: 100%; position: absolute; inset: 0;
+  height: 100%;
   /* On a phone this is a tall frame — Alesha's head and the swan must both
      stay in view, so the focal point sits between them, biased upward. */
   aspect-ratio: 16 / 10;
@@ -472,12 +485,3 @@ figure.wide figcaption {
 
 /* The hero CTA and the footer both sit on dark — keep focus rings light. */
 .hero :focus-visible { outline-color: var(--paper); }
-
-/* ---------------------------------------------------------------- offline forms
-   Signup and contact are wired up but not yet connected to a provider. Rather
-   than ship a form that silently swallows a real person's message, the inputs
-   and button are visibly disabled. Remove .signup--off and the onsubmit guard
-   when the endpoints exist. */
-.signup--off input, .signup--off button,
-.signup--off textarea { opacity: .55; }
-.signup--off button { cursor: not-allowed; }

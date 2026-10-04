@@ -175,8 +175,9 @@ folder, next to the originals rather than over them.
 
 ## Accessibility and performance notes
 
-- All text meets WCAG AA contrast; the hero scrim is tuned against the measured
-  luminance of the actual hero images.
+- All text meets WCAG AA contrast. The hero scrim is tuned against the measured
+  luminance of the actual hero images, and the dark footer's link colours are
+  specified explicitly so they outrank the light-background header rule.
 - Every image has descriptive alt text, and the logo uses empty alt (it is
   decorative — the wordmark carries the name).
 - Video, if added, must have a poster frame, captions, and must respect

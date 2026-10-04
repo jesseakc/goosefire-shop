@@ -46,7 +46,7 @@
 <section class="wrap band narrow">
   <h2>Send a message</h2>
   <!-- Cloudflare Worker endpoint. Configured in MILESTONE_1.md step 4. -->
-  <form class="signup signup--off" method="post" action="">
+  <form class="signup signup--off" method="post" action="" onsubmit="return false;" aria-disabled="true">
     <label for="name">Your name</label>
     <input id="name" name="name" type="text" autocomplete="name" required>
 
