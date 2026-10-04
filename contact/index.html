@@ -19,11 +19,9 @@
 <meta property="og:image" content="https://www.goosefire.shop/media/PXL_20260521_230133273.MP/PXL_20260521_230133273.MP-1600.jpg">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="1200">
-<meta property="og:image:alt" content="Alesha at her workbench holding an open clay bird form.">
+<meta property="og:image:alt" content="Alesha at her workbench holding a paintbrush over a bucket of liquid clay, with plaster moulds on the bench.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.goosefire.shop/media/PXL_20260521_230133273.MP/PXL_20260521_230133273.MP-1600.jpg">
-
-<link rel="stylesheet" href="/shared/tokens.css">
 <link rel="stylesheet" href="/shared/site.css">
 <script src="/shared/contact.js" defer></script>
 </head>
@@ -56,18 +54,21 @@
     <form class="form" id="contact-form" novalidate>
       <div class="field">
         <label for="name">Your name</label>
-        <input id="name" name="name" type="text" autocomplete="name" required>
-        <p class="error" data-for="name" hidden>Please add your name.</p>
+        <input id="name" name="name" type="text" autocomplete="name" required
+               aria-describedby="err-name">
+        <p class="error" id="err-name" data-for="name" hidden>Please add your name.</p>
       </div>
       <div class="field">
         <label for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
-        <p class="error" data-for="email" hidden>Please add an email we can reply to.</p>
+        <input id="email" name="email" type="email" autocomplete="email" required
+               aria-describedby="err-email">
+        <p class="error" id="err-email" data-for="email" hidden>Please add an email we can reply to.</p>
       </div>
       <div class="field">
         <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" required></textarea>
-        <p class="error" data-for="message" hidden>Please add a message.</p>
+        <textarea id="message" name="message" rows="6" required
+                  aria-describedby="err-message"></textarea>
+        <p class="error" id="err-message" data-for="message" hidden>Please add a message.</p>
       </div>
       <button class="btn" type="submit">Send message</button>
       <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
@@ -76,9 +77,8 @@
     <aside class="contact-aside">
       <h2>The studio</h2>
       <p>Goose Fire Ceramics is in Staunton, Illinois.</p>
-      <p>Nothing is for sale online yet, and the studio is not open to visitors at the
-      moment. If you would like to know when a piece is ready, or you have a question about
-      the work, the form is the way to reach us.</p>
+      <p>Nothing is for sale online yet, and If you would like to know when a piece is ready, or you have a question about the work,
+the form is the way to reach us.</p>
       <p class="aside-note">We read these ourselves.</p>
     </aside>
   </div>

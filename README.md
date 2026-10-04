@@ -25,15 +25,16 @@ _site/
 ├── 404.html
 ├── brand/                logo mark + favicon
 ├── media/                web-optimised images (AVIF + JPEG, 800w + 1600w)
-├── shared/               tokens.css (the brand palette) + site.css
+├── shared/               site.css (brand tokens + all layout)
 ├── sitemap.xml
 ├── vercel.json           static-host config
 └── _headers              cache headers
 ```
 
-**Brand is defined once**, in `shared/tokens.css`. Changing a colour there changes it on
-every page. The three future Goose Fire domains (`luxuryornaments.xyz`,
-`ceramicchristmas.com`) are meant to import the same file, so the brand cannot drift.
+**Brand is defined once**, at the top of `shared/site.css` in a single `:root` block.
+Changing a colour there changes it on every page. The three future Goose Fire domains
+(`luxuryornaments.xyz`, `ceramicchristmas.com`) are meant to import the same file, so the
+brand cannot drift.
 
 ---
 
@@ -120,7 +121,8 @@ there instead. Keep the client-side validation either way.
 
 ### Change a colour or a font
 
-Edit `shared/tokens.css`. It is the single source of truth for the palette and type.
+Edit the `:root` block at the top of `shared/site.css`. It is the single source of truth
+for the palette and type.
 Everything else inherits from it.
 
 ### Add a photograph

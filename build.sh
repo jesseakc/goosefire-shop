@@ -51,7 +51,7 @@ rm -f "$OUT"/.env "$OUT"/.env.local "$OUT"/.env.production 2>/dev/null || true
 
 # 5. Fail loudly rather than shipping a broken site.
 missing=0
-for required in index.html 404.html sitemap.xml shared/tokens.css shared/site.css brand/mark.png; do
+for required in index.html 404.html sitemap.xml shared/site.css shared/contact.js brand/mark.png; do
   if [ ! -f "$OUT/$required" ]; then
     echo "ERROR: expected $required in the output." >&2
     missing=1

@@ -358,3 +358,5 @@ figcaption {
   }
   .btn { transition: none; }
 }
+/* .pad-block is used by the 404 template, which loads no other page furniture. */
+.pad-block { padding-block: clamp(2.5rem, 8vw, 6rem); }
