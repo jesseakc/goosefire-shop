@@ -52,25 +52,49 @@ There is nothing to install and nothing to compile.
 
 ## Deploy to Vercel
 
-1. Import the repository in Vercel.
-2. Use these settings — the defaults work for every other field:
+### ⚠ Read this first: the Hobby plan is not available for a business
+
+Vercel's own Fair Use Guidelines state:
+
+> "Hobby teams are restricted to non-commercial personal use only. All commercial usage of the
+> platform requires either a Pro or Enterprise plan. Commercial usage is defined as any
+> Deployment that is used for the purpose of financial gain of anyone involved in any part of the
+> production of the project…"
+
+— <https://vercel.com/docs/limits/fair-use-guidelines> (page last updated 2026-07-29)
+
+Their named examples include *"Advertising the sale of a product or service"* and *"Any method of
+requesting or processing payment from visitors of the site."*
+
+**Goose Fire is a ceramics studio that intends to sell.** That is commercial use by their own
+definition, so **the free Hobby plan is not the right plan for this site** — Hobby is $0 but
+Vercel restricts it to non-commercial personal projects, and enforcement can mean suspension.
+
+**Choose one:**
+
+| Option | Cost | Notes |
+|---|---|---|
+| **Vercel Pro** | **$20/month** | Simplest. Removes the restriction outright. |
+| **Cloudflare Pages** | **$0** | No commercial restriction, unlimited bandwidth on the free tier. Static site, no server. This is the recommendation in `.planning/research/web-tech-stack-2026.md`. |
+| **Netlify** | $0–$ | **Check current terms** — bandwidth is now credit-metered (~15 GB/month effective), which is tight for a media site. |
+
+Nothing in this repository requires Vercel specifically. It is plain static HTML with a
+`vercel.json` for cache headers.
+
+### If you use Vercel
+
+1. Import the repository.
+2. Settings:
 
 | Setting | Value |
 |---|---|
 | **Framework Preset** | `Other` |
-| **Build Command** | `npm run build` *(or leave blank — see note)* |
+| **Build Command** | `npm run build` |
 | **Output Directory** | `.` |
 | **Install Command** | leave blank |
 
-> **Note on the build command.** This repository *is* the finished static output. If Vercel
-> complains about a missing build command, either leave it empty, or set it to a no-op:
-> `mkdir -p .vercel && touch .vercel/build` — Vercel accepts an empty-output build.
->
-> If you would rather have Vercel run a real build, that is also supported — see
-> *Rebuilding from source* below.
-
-3. Add the domain **goosefire.shop** in Vercel's **Settings → Domains**, then point your
-   DNS at whatever Vercel shows you. *(DNS changes are yours to make.)*
+3. Add the domain **goosefire.shop** in **Settings → Domains**, then point DNS at whatever Vercel
+   shows you. *(DNS changes are yours to make.)*
 
 ### Environment variables
 
