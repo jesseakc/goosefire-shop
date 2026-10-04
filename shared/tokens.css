@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Goose Fire — brand tokens
+   ONE source of truth. Imported by every site. Change a value here and all
+   three sites follow. This is what keeps maintenance at 1x rather than 3x.
+
+   Palette sampled from the studio's own photographs with ImageMagick, not
+   chosen from a mood board. Sources: a glazed ornament on the workbench
+   (teal glaze #5D8292, glaze rim #8C635D, bisque #C6C2B0, bench shadow
+   #23201E, wood #4A3D36) and Alesha's leather apron (#875F3A, #977159).
+   ========================================================================== */
+
+:root {
+  /* --- ink & ground --- */
+  --ink:        #23201E;   /* bench shadow — primary text */
+  --umber:      #4A3D36;   /* wood, shelving */
+  --paper:      #F2EFE9;   /* page ground — warmer than white, sits near bisque */
+  --paper-warm: #E8E4DA;
+  --line:       #D8D3C8;
+
+  /* --- material accents (used sparingly) --- */
+  --leather:    #875F3A;   /* apron — links, small emphasis */
+  --clay:       #977159;
+  --bisque:     #C6C2B0;
+  --glaze:      #5D8292;   /* the surprise — never a background */
+  --rose:       #8C635D;
+
+  /* --- semantic --- */
+  --text:       var(--ink);
+  --text-soft:  #5F584F;
+  --text-mute:  #6D655C;
+  --accent:     var(--leather);
+  --focus:      var(--glaze);
+
+  /* --- type --- */
+  --font-body: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-hand: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* fluid scale — readable at 320px, no layout jump */
+  --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.91rem);
+  --step-0:  clamp(1rem, 0.95rem + 0.25vw, 1.12rem);
+  --step-1:  clamp(1.20rem, 1.10rem + 0.5vw, 1.45rem);
+  --step-2:  clamp(1.45rem, 1.25rem + 1.0vw, 1.90rem);
+  --step-3:  clamp(1.75rem, 1.40rem + 1.75vw, 2.50rem);
+  --step-4:  clamp(2.10rem, 1.55rem + 2.75vw, 3.30rem);
+
+  /* --- space --- */
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.75rem;
+  --sp-4: 3rem;
+  --sp-5: 5rem;
+
+  --wrap: 68rem;
+  --measure: 62ch;
+
+  --radius: 6px;
+}
+
+/* Respect the reader's motion preference globally. Every animation in the
+   system is decorative; nothing depends on movement to be understood. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

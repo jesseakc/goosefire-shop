@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Goose Fire Ceramics</title>
+<meta name="description" content="Get in touch with Goose Fire Ceramics in Staunton, Illinois.">
+<meta name="theme-color" content="#23201E">
+<link rel="icon" type="image/png" href="/brand/favicon-64.png">
+<link rel="stylesheet" href="/shared/tokens.css">
+<link rel="stylesheet" href="/shared/site.css">
+<link rel="canonical" href="https://goosefire.shop/contact/">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="wordmark" href="/" aria-label="Goose Fire Ceramics — home">
+      <img class="mark" src="/brand/mark.png" alt="" width="170" height="256">
+      <span class="wm-text">Goose&nbsp;Fire</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="/makers/">Makers</a>
+      <a href="/work/">Work</a>
+      <a href="/process/">Process</a>
+      <a href="/journal/">Journal</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<section class="wrap pad-block">
+  <h1>Get in touch</h1>
+  <p class="lead">Questions about the work, a piece you have seen, or wanting to follow along —
+  this reaches us.</p>
+</section>
+
+<section class="wrap band narrow">
+  <h2>Send a message</h2>
+  <!-- Cloudflare Worker endpoint. Configured in MILESTONE_1.md step 4. -->
+  <form class="signup signup--off" method="post" action="" onsubmit="return false;" aria-disabled="true">
+    <label for="name">Your name</label>
+    <input id="name" name="name" type="text" autocomplete="name" required>
+
+    <label for="email" style="margin-top:1rem">Email address</label>
+    <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-h">
+
+    <label for="msg" style="margin-top:1rem">Message</label>
+    <textarea id="msg" name="message" rows="6" required
+              style="width:100%;padding:0.7rem 0.85rem;font:inherit;border:1px solid #b9b2a4;border-radius:6px;background:#fff"></textarea>
+
+    <!-- honeypot: bots fill it, humans never see it -->
+    <p aria-hidden="true" style="position:absolute;left:-9999px">
+      <label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+    </p>
+
+    <p style="margin-top:1rem"><button type="submit" disabled>Send message</button></p>
+    <p class="help">Messaging is not switched on yet — we would rather say so than lose
+    your message. Until then, find us on the studio's social accounts.</p>
+  </form>
+</section>
+
+<section class="wrap band narrow">
+  <h2>Studio</h2>
+  <p>Goose Fire Ceramics is in Staunton, Illinois. We do not currently take visitors, and we
+  are not able to say when that might change.</p>
+</section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="foot-brand">
+      <img class="mark" src="/brand/mark-white.png" alt="" width="170" height="256">
+      <span class="wm-text">Goose&nbsp;Fire Ceramics</span>
+    </p>
+    <p>Staunton, Illinois</p>
+    <nav aria-label="Footer">
+      <a href="/makers/">Makers</a>
+      <a href="/work/">Work</a>
+      <a href="/process/">Process</a>
+      <a href="/journal/">Journal</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <p class="fine">Work shown is made and photographed by us. Not for sale at present.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Nothing generated should ever be ignored here — _site IS the deliverable.
+# These are the things that must never be committed.
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+.DS_Store
+node_modules/
+.vercel/

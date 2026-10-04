@@ -1,0 +1,483 @@
+/* Goose Fire — shared site styles
+   Plain CSS, no build step, no dependencies. Edit and refresh. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* --- accessibility: a visible, high-contrast focus ring everywhere ---
+   The glaze teal (--focus) measures 3.61:1 on the paper ground and 3.91:1 on
+   ink, both above the 3:1 non-text minimum, so one colour covers every surface
+   in this system. (An earlier attempt gave the footer a pale ring — the footer
+   is not dark, and bisque-on-paper is only 1.56:1, so that made it worse.) */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip {
+  position: absolute; left: -9999px;
+  background: var(--ink); color: var(--paper);
+  padding: 0.7rem 1.1rem; z-index: 100; border-radius: 0 0 var(--radius) 0;
+}
+.skip:focus { left: 0; top: 0; }
+
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+.narrow > p, .narrow > h2, .lead { max-width: var(--measure); }
+
+/* ---------------------------------------------------------------- header */
+.site-head {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  position: sticky; top: 0; z-index: 20;
+}
+.head-inner {
+  display: flex; flex-wrap: wrap; gap: var(--sp-2);
+  align-items: center; justify-content: space-between;
+  padding-block: 0.8rem;
+}
+.wordmark {
+  display: inline-flex; align-items: center; gap: .45rem;
+  text-decoration: none; color: var(--ink);
+  font-size: var(--step-1); letter-spacing: -0.01em;
+}
+/* The goose-in-flame mark, from media/Brand Images. Tall and narrow
+   (170x256), so it is sized by HEIGHT and the wordmark sits beside it. */
+.mark {
+  height: 1.55em; width: auto; display: inline-block;
+  object-fit: contain; flex: none;
+}
+.site-head nav { display: flex; flex-wrap: wrap; gap: 0.15rem 1.15rem; }
+.site-head nav a, .site-foot nav a {
+  color: var(--text-soft); text-decoration: none;
+  font-size: var(--step--1); padding-block: 0.25rem;
+}
+.site-head nav a:hover, .site-foot nav a:hover,
+.site-head nav a[aria-current="page"], .site-foot nav a[aria-current="page"] {
+  color: var(--accent); text-decoration: underline; text-underline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------- hero
+   Text legibility over artwork. Measured against the actual hero images: the
+   bottom strip of each averages ~67% lightness (rgb 169,138,120), so paper
+   text directly on it is only 2.78:1 and bisque 1.79:1 — well under AA.
+
+   The old gradient reached its darkest only at 100% height, so the headline
+   sat around 70% height where the scrim was still ~0.55 opaque. That is fine
+   for the large h1 (6.7:1) but NOT for the smaller supporting copy, which is
+   where the legibility complaint actually came from.
+
+   Fix: a two-part treatment. A full-height gradient starts darkening much
+   earlier and never falls below 0.62 anywhere in the text zone, and the text
+   block itself gets a soft radial darkening directly behind it. Belt and
+   braces, because the hero artwork can change. */
+.hero { position: relative; background: var(--umber); max-height: 86vh; overflow: hidden; }
+
+.hero-veil {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg,
+      rgba(35,32,30,0) 0%,
+      rgba(35,32,30,.30) 34%,
+      rgba(35,32,30,.62) 52%,
+      rgba(35,32,30,.82) 70%,
+      rgba(35,32,30,.90) 100%);
+}
+.hero .carousel { position: relative; z-index: 1; }
+
+/* The text sits in its own darkened pocket, so line length and wrapping
+   cannot push a word back onto bright artwork. */
+.hero-text {
+  position: absolute; inset-inline: 0; bottom: 0; z-index: 2;
+  padding-block: var(--sp-4) var(--sp-4);
+  background:
+    radial-gradient(120% 150% at 22% 108%,
+      rgba(35,32,30,.82) 0%,
+      rgba(35,32,30,.62) 42%,
+      rgba(35,32,30,0) 78%);
+}
+.hero-disclosure {
+  margin-top: .75rem; font-size: var(--step--1); color: #D8D3C8;
+  max-width: 48ch; line-height: 1.55;
+  text-shadow: 0 1px 10px rgba(20,18,16,.9);
+}
+/* (merged into the .hero-text rule above — this second block previously
+   overrode its padding and dropped its z-index) */
+.hero-text { color: var(--paper); }
+.hero-text h1 {
+  margin: 0 0 0.35rem;
+  font-size: var(--step-3); font-weight: 400; line-height: 1.14;
+  letter-spacing: -0.015em; max-width: 22ch;
+  text-shadow: 0 2px 22px rgba(20,18,16,.9), 0 1px 4px rgba(20,18,16,.7);
+}
+.hero-text p {
+  margin: 0; color: #E6E2D8; font-size: var(--step-0);
+  max-width: 44ch; text-shadow: 0 1px 12px rgba(20,18,16,.85);
+}
+
+/* ---------------------------------------------------------------- bands */
+.band { padding-block: var(--sp-5); border-top: 1px solid var(--line); }
+.band:first-of-type { border-top: 0; }
+h2 {
+  font-size: var(--step-2); font-weight: 400; letter-spacing: -0.01em;
+  margin: 0 0 var(--sp-3); max-width: 24ch;
+}
+h3 { font-size: var(--step-1); font-weight: 400; margin: 0.8rem 0 0.35rem; }
+.lead { font-size: var(--step-1); line-height: 1.5; color: #3a352f; }
+p { max-width: var(--measure); }
+a { color: var(--accent); }
+a:focus-visible { color: var(--ink); }
+
+.more {
+  display: inline-block; margin-top: 0.5rem;
+  text-decoration-thickness: 1px; text-underline-offset: 4px;
+}
+
+/* ---------------------------------------------------------------- cards */
+.cards {
+  display: grid; gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+.card img {
+  aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: var(--radius); background: var(--paper-warm);
+}
+.card p { color: var(--text-soft); font-size: var(--step--1); margin: 0; }
+
+/* ---------------------------------------------------------------- notice */
+.notice {
+  background: var(--paper-warm);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--sp-3);
+}
+.notice h2 { margin-top: 0; }
+
+/* ---------------------------------------------------------------- forms */
+.signup { max-width: 34rem; }
+.signup label {
+  display: block; font-size: var(--step--1);
+  color: var(--text-soft); margin-bottom: 0.35rem;
+}
+.signup .row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.signup input[type="email"] {
+  flex: 1 1 14rem; min-width: 0;
+  padding: 0.7rem 0.85rem; font: inherit; font-size: var(--step-0);
+  color: var(--ink); background: #fff;
+  border: 1px solid #8a8378; border-radius: var(--radius);
+}
+.signup button {
+  flex: 0 0 auto; cursor: pointer;
+  padding: 0.7rem 1.3rem; font: inherit; font-size: var(--step-0);
+  color: var(--paper); background: var(--ink);
+  border: 1px solid var(--ink); border-radius: var(--radius);
+}
+.signup button:hover { background: var(--umber); }
+.help { font-size: var(--step--1); color: var(--text-mute); margin: 0.5rem 0 0; }
+
+/* ---------------------------------------------------------------- footer */
+.site-foot {
+  border-top: 1px solid var(--line);
+  padding-block: var(--sp-4); margin-top: var(--sp-4);
+  color: var(--text-soft); font-size: var(--step--1);
+}
+.site-foot nav { display: flex; flex-wrap: wrap; gap: 0.15rem 1.15rem; margin-block: 0.5rem; }
+.site-foot p { margin: 0.25rem 0; }
+.fine { color: var(--text-mute); }
+
+/* ---------------------------------------------------------------- video */
+/* No autoplay-with-sound anywhere. Poster + explicit controls. The controls
+   attribute is what makes reduced-motion respect real: the visitor decides. */
+figure.video { margin: 0; }
+figure.video video {
+  width: 100%; border-radius: var(--radius); background: var(--ink);
+  display: block;
+}
+figure.video figcaption {
+  font-size: var(--step--1); color: var(--text-mute);
+  margin-top: 0.5rem; max-width: var(--measure);
+}
+
+/* ---------------------------------------------------------------- utility */
+.stack > * + * { margin-top: var(--sp-3); }
+.pad-block { padding-block: var(--sp-4); }
+figure { margin: 0; }
+figcaption { font-size: var(--step--1); color: var(--text-mute); }
+
+@media (max-width: 30rem) {
+  .head-inner { justify-content: flex-start; }
+  .hero { max-height: 70vh; }
+}
+/* --- figure card: for captioned illustrations (AI pig section) --- */
+figure.card { margin: 0; }
+figure.card img { aspect-ratio: 16 / 9; object-fit: cover; }
+figure.card figcaption {
+  font-size: var(--step--1); color: var(--text-mute);
+  margin-top: 0.6rem; max-width: 34ch;
+}
+.fine-note {
+  font-size: var(--step--1); color: var(--text-mute);
+  max-width: var(--measure); margin-top: var(--sp-3);
+}
+
+/* ---------------------------------------------------------------- artist page
+   The artist is the subject of this site, so her page gets its own type scale
+   and a wider image well. Deliberately restrained: no effects, just space. */
+.artist-head { padding-block: var(--sp-5) var(--sp-3); }
+.eyebrow {
+  font-family: system-ui, sans-serif;
+  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 .6rem;
+}
+.artist-head h1 {
+  font-size: var(--step-4); margin: 0 0 var(--sp-2);
+  letter-spacing: -.02em; line-height: 1.05;
+}
+.artist-head .lead { font-size: var(--step-1); max-width: 40ch; }
+
+figure.wide { margin: 0; }
+figure.wide img {
+  width: 100%; border-radius: var(--radius);
+  background: var(--paper-warm);
+}
+figure.wide figcaption {
+  font-size: var(--step--1); color: var(--text-mute);
+  margin-top: .7rem; max-width: 48ch;
+}
+
+/* A quiet aside — used for accuracy notes that would break the rhythm if
+   stated at full voice. */
+.quiet {
+  font-size: var(--step--1); color: var(--text-mute);
+  border-left: 2px solid var(--line); padding-left: 1rem;
+}
+
+/* ---------------------------------------------------------------- carousel
+   A CSS scroll-snap carousel: no JS, no library, works without script,
+   keyboard-reachable, and degrades to a swipeable strip if CSS is partial.
+   Honouring reduced motion means the scroll is instant rather than animated. */
+.carousel { position: relative; margin-inline: auto; }
+
+.carousel-track {
+  display: flex;
+  gap: var(--sp-2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.carousel-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  margin: 0;
+  position: relative;
+  background: var(--umber);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.carousel-slide img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+/* Slide counter, top-right. Small, quiet, always legible. */
+.carousel-count {
+  position: absolute; top: .7rem; right: .8rem;
+  font-family: system-ui, sans-serif; font-size: .72rem;
+  letter-spacing: .06em;
+  color: var(--paper);
+  background: rgba(28,25,23,.78);
+  padding: .2rem .5rem; border-radius: 20px;
+}
+
+/* The disclosure. Always visible, never dismissible, never only-on-hover. */
+.carousel-badge {
+  position: absolute; left: .8rem; bottom: .8rem;
+  font-family: system-ui, sans-serif;
+  font-size: .68rem; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--paper);
+  background: rgba(28,25,23,.78);
+  padding: .25rem .6rem; border-radius: 20px;
+}
+
+.carousel-dots { display: flex; gap: .4rem; justify-content: center; margin-top: .8rem; }
+.carousel-dots a {
+  width: 2rem; height: 3px; border-radius: 2px;
+  background: var(--line); display: block;
+  text-decoration: none;
+}
+.carousel-dots a:hover { background: var(--accent); }
+
+.carousel-hint {
+  font-size: var(--step--1); color: var(--text-mute);
+  text-align: center; margin-top: .5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track { scroll-behavior: auto; }
+  .carousel-hint { display: none; }
+}
+
+/* ---------------------------------------------------------------- footer
+   Dark ground, so the white knockout of the mark. */
+.site-foot { background: var(--ink); color: #CFC9BE; margin-top: var(--sp-5); }
+.site-foot .fine { color: #A8A199; }
+.site-foot strong { color: var(--paper); }
+.site-foot a { color: #E6E2D8; }
+.site-foot a:hover { color: #fff; }
+.site-foot nav a[aria-current="page"] { color: var(--bisque); }
+.site-foot .mark { height: 1.3rem; }
+.foot-brand { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+.foot-brand .wm-text { font-size: var(--step-0); letter-spacing: .04em; }
+
+/* On dark, the teal focus ring needs help: it is 3.91:1 on ink, which
+   passes, but a paler ring reads better against a near-black ground. */
+.site-foot :focus-visible { outline-color: #C6C2B0; }
+
+/* ==========================================================================
+   HOMEPAGE COMPOSITION
+   Deliberately varied scale. No repeated card grid: the pieces are not
+   alike, so they should not be presented alike.
+   ========================================================================== */
+
+/* --- shared section furniture --- */
+.eyebrow {
+  font-family: system-ui, sans-serif;
+  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 .5rem;
+}
+.section-note { color: var(--text-soft); max-width: 46ch; }
+
+/* --- 1. portrait hero: face + hands + piece survive the crop --- */
+.hero--portrait { max-height: none; }
+.hero-portrait {
+  width: 100%;
+  /* On a phone this is a tall frame — Alesha's head and the swan must both
+     stay in view, so the focal point sits between them, biased upward. */
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: 62% 42%;
+}
+@media (max-width: 48rem) {
+  .hero-portrait {
+    aspect-ratio: 4 / 5;
+    object-position: 58% 34%;   /* tighter on her, not the bench */
+  }
+}
+.hero-kicker {
+  font-family: system-ui, sans-serif;
+  font-size: .74rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--bisque); margin: 0 0 .7rem;
+}
+.hero-text h1 { max-width: 20ch; }
+.hero-sub { max-width: 42ch; margin-top: .5rem !important; }
+
+.hero-cta {
+  display: inline-block; margin-top: 1.15rem;
+  padding: .7rem 1.35rem;
+  background: var(--paper); color: var(--ink);
+  text-decoration: none; font-size: var(--step--1);
+  letter-spacing: .02em; border-radius: 2px;
+}
+.hero-cta:hover { background: #fff; text-decoration: underline; text-underline-offset: 4px; }
+.hero-cta:focus-visible { outline-color: var(--paper); }
+
+/* --- 2. work: one wide image, then a pair. Varied scale on purpose. --- */
+.work-lead { margin: var(--sp-3) 0 var(--sp-4); }
+.work-lead img {
+  width: 100%; aspect-ratio: 21 / 9; object-fit: cover;
+  border-radius: var(--radius); background: var(--paper-warm);
+}
+@media (max-width: 48rem) { .work-lead img { aspect-ratio: 16 / 10; } }
+
+.work-pair {
+  display: grid; gap: var(--sp-3);
+  grid-template-columns: 1.25fr 1fr;   /* unequal: the pieces aren't alike */
+  align-items: start;
+}
+.work-pair figure { margin: 0; }
+.work-pair img {
+  width: 100%; border-radius: var(--radius); background: var(--paper-warm);
+}
+/* Different crops for each half — a square-ish and a portrait, matching the
+   actual pieces rather than forcing one box on both. */
+.work-pair figure:first-child img { aspect-ratio: 4 / 3; object-fit: cover; }
+.work-pair figure:last-child img  { aspect-ratio: 3 / 4; object-fit: cover; }
+@media (max-width: 48rem) {
+  .work-pair { grid-template-columns: 1fr; }
+  .work-pair figure:last-child img { aspect-ratio: 4 / 3; }
+}
+.work-pair figcaption, .work-lead figcaption {
+  font-size: var(--step--1); color: var(--text-mute);
+  margin-top: .6rem; max-width: 40ch;
+}
+
+/* --- 3. making: photo beside text, not a card --- */
+.making {
+  display: grid; gap: var(--sp-4);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: start; margin-top: var(--sp-3);
+}
+.making-photo { margin: 0; }
+.making-photo img {
+  width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+  border-radius: var(--radius); background: var(--paper-warm);
+}
+.making-text p { max-width: 46ch; }
+.making-text p + p { margin-top: var(--sp-2); }
+@media (max-width: 60rem) {
+  .making { grid-template-columns: 1fr; }
+  .making-photo img { aspect-ratio: 16 / 10; }
+}
+
+/* --- 4. people: Alesha clearly primary --- */
+.people {
+  display: grid; gap: var(--sp-4);
+  grid-template-columns: 1.6fr 1fr;
+  align-items: start; margin-top: var(--sp-3);
+}
+.person { margin: 0; }
+.person img {
+  width: 100%; border-radius: var(--radius); background: var(--paper-warm);
+}
+.person--primary img { aspect-ratio: 3 / 2; object-fit: cover; }
+.person:not(.person--primary) img { aspect-ratio: 4 / 3; object-fit: cover; }
+.person h3 { font-size: var(--step-1); margin: .9rem 0 .3rem; }
+.person p { color: var(--text-soft); font-size: var(--step--1); max-width: 42ch; }
+.person--primary p { color: var(--text); font-size: var(--step-0); }
+.caption-note { color: var(--text-mute); font-size: var(--step--1); }
+@media (max-width: 60rem) {
+  .people { grid-template-columns: 1fr; }
+  .person--primary img { aspect-ratio: 16 / 10; }
+}
+
+/* --- 5. connect: quiet close, not a sales push --- */
+.connect { border-top: 1px solid var(--line); }
+.connect .signup { margin-top: var(--sp-3); }
+.connect-alt { margin-top: var(--sp-2); font-size: var(--step--1); color: var(--text-mute); }
+
+/* The hero CTA and the footer both sit on dark — keep focus rings light. */
+.hero :focus-visible { outline-color: var(--paper); }
+
+/* ---------------------------------------------------------------- offline forms
+   Signup and contact are wired up but not yet connected to a provider. Rather
+   than ship a form that silently swallows a real person's message, the inputs
+   and button are visibly disabled. Remove .signup--off and the onsubmit guard
+   when the endpoints exist. */
+.signup--off input, .signup--off button,
+.signup--off textarea { opacity: .55; }
+.signup--off button { cursor: not-allowed; }

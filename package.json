@@ -1,0 +1,10 @@
+{
+  "name": "goosefire-shop",
+  "private": true,
+  "version": "1.0.0",
+  "description": "The public site for Goose Fire Ceramics \u2014 a ceramics studio in Staunton, Illinois.",
+  "scripts": {
+    "build": "mkdir -p .vercel && touch .vercel/build",
+    "start": "python3 -m http.server 8901"
+  }
+}
