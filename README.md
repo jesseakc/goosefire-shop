@@ -98,22 +98,21 @@ Nothing in this repository requires Vercel specifically. It is plain static HTML
 
 ### Environment variables
 
-**None are required to build or serve this site.** It is entirely static.
-
-There is a `.env.example` in this repo as a placeholder for when the forms are connected.
-It contains no real values and nothing reads it yet.
+**None are required to build or serve this site.** It is entirely static. A `.env.example`
+is included as a placeholder only; it contains no real values and nothing reads it.
 
 | Variable | Needed? | Purpose |
 |---|---|---|
-| `CONTACT_FORM_ENDPOINT` | no | Where the contact form POSTs. Not yet configured. |
-| `NEWSLETTER_ENDPOINT` | no | Where the signup form POSTs. Not yet configured. |
+| `CONTACT_FORM_ENDPOINT` | no | Where the contact form POSTs. Not configured. |
 
-**The signup and contact forms are deliberately disabled.** Both targets
-(`buttondown.email`, `form.goosefire.shop`) do not currently resolve, and a form that
-silently discards a real person's message is worse than no form. The inputs are visibly
-greyed out and say so. To enable them, set the endpoints above, then remove the
-`signup--off` class and the `onsubmit="return false;"` guard from the form in
-`index.html` and `contact/index.html`.
+**How the contact form works right now.** There is no backend and no mail provider, so rather
+than ship a form that silently discards a message, it validates properly and then hands the
+message to the visitor's own email client via a `mailto:` link. It says exactly that, and it
+does not claim anything was sent. No address is hardcoded, because we have not been given a
+verified one.
+
+To switch to a real form: set `CONTACT_FORM_ENDPOINT` in `shared/contact.js`, and it will POST
+there instead. Keep the client-side validation either way.
 
 ---
 
