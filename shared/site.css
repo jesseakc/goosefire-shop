@@ -23,7 +23,8 @@
   --glaze: #697268;
   --paper-text: #24231f;
   --paper-mute: #5d584e;
-  --paper-faint: #6f685c; /* 4.77:1 on ivory; #7d766a was 3.89 and failed AA */
+  --paper-faint: #5d584e; /* 6.12:1 on ivory, 5.55:1 on the clay band. #6f685c
+     measured 4.33:1 on --ivory-deep and failed AA there. */
   --on-dark: #f3eee5;
   --on-dark-mute: #c9c2b4;
   --on-dark-faint: #a49c8c;
@@ -496,7 +497,8 @@ figcaption,
   color: var(--on-dark-mute);
 }
 
-.band-dark .caption {
+.band-dark .caption,
+.band-dark figcaption {
   color: var(--on-dark-faint);
 }
 

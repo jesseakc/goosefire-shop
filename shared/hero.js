@@ -97,7 +97,13 @@
     return;
   }
 
-  tryPlay();
+  // Playback is started HERE rather than by an `autoplay` attribute. The
+  // attribute fires during HTML parsing, before this file runs, so a
+  // prefers-reduced-motion visitor would get moving video regardless of the
+  // check below. Measured in a real browser: with `autoplay` in the markup,
+  // currentTime had already reached 5.9s under forced reduced motion.
+  if (video.getAttribute("data-autoplay") === "true") tryPlay();
+  else showToggle();
 
   // If the preference changes mid-session, respect it immediately.
   if (typeof reduceMotion.addEventListener === "function") {
