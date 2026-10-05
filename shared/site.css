@@ -1222,3 +1222,59 @@ figcaption,
     margin-top: var(--sp-4);
   }
 }
+
+
+/* ===========================================================================
+   WORK PAGE
+   ---------------------------------------------------------------------------
+   Six pieces. Auto-placement left a dead block beside the lead and a short row
+   at the foot, so the desktop rows are stated explicitly and every row of the
+   twelve columns is accounted for.
+
+     row 1   7 + 5    lead portrait, and its companion
+     row 2   5 + 7    two pieces, reversed weight
+     row 3   8 + 4    a wide landscape piece and a tall one
+   =========================================================================== */
+
+@media (min-width: 62rem) {
+  .work-lead {
+    grid-column: 1 / span 7;
+    grid-row: 1;
+  }
+  .work-second {
+    grid-column: 8 / span 5;
+    grid-row: 1;
+  }
+  .work-third {
+    grid-column: 1 / span 5;
+    grid-row: 2;
+  }
+  .work-fourth {
+    grid-column: 6 / span 7;
+    grid-row: 2;
+  }
+  .work-fifth {
+    grid-column: 1 / span 8;
+    grid-row: 3;
+  }
+  .work-sixth {
+    grid-column: 9 / span 4;
+    grid-row: 3;
+  }
+
+  /* Each frame follows the photograph, so nothing is cropped mid-silhouette. */
+  .work-lead img,
+  .work-third img {
+    aspect-ratio: 5 / 4;
+  }
+  .work-second img,
+  .work-fifth img {
+    aspect-ratio: 4 / 3;
+  }
+  .work-fourth img {
+    aspect-ratio: 4 / 5;
+  }
+  .work-sixth img {
+    aspect-ratio: 3 / 4;
+  }
+}
