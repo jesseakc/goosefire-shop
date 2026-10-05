@@ -1278,3 +1278,24 @@ figcaption,
     aspect-ratio: 3 / 4;
   }
 }
+
+
+/* The Process opening pairs the copy with the clip so the band fills the width
+   instead of leaving the right half of a 1440 screen empty. The clip is capped
+   so it cannot grow with the viewport, and the copy keeps a readable measure. */
+@media (min-width: 62rem) {
+  .process-intro {
+    grid-template-columns: 5fr 6fr;
+    align-items: center;
+  }
+
+  .process-intro .clip {
+    max-width: 38rem;
+    justify-self: end;
+    width: 100%;
+  }
+
+  .process-intro .lede {
+    max-width: 30ch;
+  }
+}
