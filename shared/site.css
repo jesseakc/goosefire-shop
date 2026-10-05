@@ -360,3 +360,40 @@ figcaption {
 }
 /* .pad-block is used by the 404 template, which loads no other page furniture. */
 .pad-block { padding-block: clamp(2.5rem, 8vw, 6rem); }
+
+/* Video figures: real footage, sized like the photos beside them. */
+.making-video, .clip { margin: 0 0 var(--sp-5); }
+
+.making-video video, .clip video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  background: var(--bisque);
+  border-radius: var(--radius);
+}
+
+/* A full-width portrait clip would run to about 950px tall and swamp the page.
+   Cap it and pair it with its caption. */
+.clip {
+  max-width: 34rem;
+}
+.clip video { max-height: 60vh; }
+
+.making-video figcaption, .clip figcaption {
+  margin-top: var(--sp-2);
+  color: var(--text-mute);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  max-width: 44ch;
+}
+
+/* A looped, decorative clip should never be the only way to see the work. */
+@media (prefers-reduced-motion: no-preference) {
+  .clip video[loop] { cursor: pointer; }
+}
+
+@media (max-width: 46rem) {
+  .making-video video, .clip video { aspect-ratio: 4 / 5; }
+}
