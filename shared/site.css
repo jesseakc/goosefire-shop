@@ -824,12 +824,17 @@ figcaption,
 
 .clip {
   margin: 0;
-  max-width: 32rem;
+  /* Sized to the footage: a 9:16 clip at 32rem tall is 18rem wide, so the
+     figure is bounded in width rather than in the old landscape width. */
+  max-width: 20rem;
 }
 
 .clip video {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  /* The clip is 608x1080 portrait. A 16/10 box with object-fit:cover kept only
+     35% of its height and threw the rest away, so the frame now matches the
+     footage. */
+  aspect-ratio: 9 / 16;
   object-fit: cover;
   background: var(--charcoal);
 }
@@ -1327,9 +1332,14 @@ figcaption,
   }
 
   .process-intro .clip {
-    max-width: 38rem;
+    /* The footage is 9:16. Bounding the height keeps the whole clip and stops a
+       width-based cap from making the video 684px tall. */
+    max-width: 17rem;
     justify-self: end;
-    width: 100%;
+  }
+
+  .process-intro .clip video {
+    max-height: 30rem;
   }
 
   .process-intro .lede {
