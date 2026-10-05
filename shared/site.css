@@ -572,8 +572,52 @@ figcaption,
      `.bleed img { height: auto }` would win on source order and stretch a 3:4
      portrait to 1900px, which is exactly the empty band this page had. */
   width: 100%;
-  height: clamp(20rem, 58vh, 34rem);
+  /* A full-bleed band is a crop, so the frame has to suit the photograph.
+     bench_wide is 3:4 portrait; forcing it into a letterbox cropped 71% of it
+     and cut the subject's head out of frame. .bleed-wide takes a panoramic
+     frame for genuinely wide photographs and .bleed-tall keeps a portrait
+     readable; each page picks the one that matches its own image. */
+  height: clamp(20rem, 44vw, 40rem);
   object-fit: cover;
+}
+
+/* A portrait in a full-bleed band: taller, so the subject survives. */
+.bleed-tall {
+  /* A 3:4 portrait cannot span a 1920px band without being cropped hard: the
+     frame is sixteen times wider than the image is tall. Bounding the image in
+     width and centring it keeps the whole photograph, head and hands included,
+     and reads as a large editorial image instead of a letterboxed sliver. */
+  display: flex;
+  justify-content: center;
+}
+
+.bleed-tall img,
+.bleed-tall video {
+  width: auto;
+  max-width: 100%;
+  height: clamp(22rem, 78vh, 52rem);
+}
+
+/* A panoramic frame, only for a photograph that is actually wide. */
+.bleed-wide {
+  /* A 4:3 photograph forced to 3.75:1 loses 64% of itself. Bounding it in width
+     and centring it keeps the whole picture and still reads as a generous band. */
+  display: flex;
+  justify-content: center;
+}
+
+.bleed-wide img,
+.bleed-wide video {
+  width: auto;
+  max-width: min(100%, 96rem);
+  height: clamp(18rem, 46vw, 40rem);
+}
+
+.bleed-wide figcaption {
+  margin: 0 auto;
+  padding: var(--sp-3) var(--gutter) 0;
+  max-width: 52ch;
+  text-align: center;
 }
 
 .bleed figcaption {
@@ -1009,13 +1053,6 @@ figcaption,
     grid-column: span 4;
   }
 
-  /* Full-bleed photography: a considered band, not a letterbox. 21/9 keeps a
-     wide crop that still reads as a photograph. */
-  .bleed img,
-  .bleed video {
-    height: clamp(24rem, 46vh, 34rem);
-  }
-
   /* The hero copy aligns to the same left edge as the rest of the page rather
      than sitting centred. */
   .hero-inner {
@@ -1298,4 +1335,13 @@ figcaption,
   .process-intro .lede {
     max-width: 30ch;
   }
+}
+
+/* With the image centred and bounded, the caption centres under it rather than
+   hanging off the page edge. */
+.bleed-tall figcaption {
+  margin: 0 auto;
+  padding: var(--sp-3) var(--gutter) 0;
+  max-width: 52ch;
+  text-align: center;
 }
