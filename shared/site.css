@@ -345,6 +345,51 @@ figcaption,
   isolation: isolate;
 }
 
+/* Desktop: two-column hero. Copy on the left at the page's own edge, media
+   filling the right, so the composition is deliberate at 1440 and wider instead
+   of a centred block on a wide screen. Below 62rem this stays a single
+   overlaid column, which is what already works on a phone. */
+@media (min-width: 62rem) {
+  .hero {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: stretch;
+    min-height: min(82vh, 44rem);
+  }
+
+
+
+  /* With the media in its own column the copy needs no darkening at all, so the
+     type sits on the charcoal ground and the photograph stays clean. */
+  .hero::after {
+    content: none;
+  }
+
+  .hero-inner {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    max-width: none;
+    padding-block: clamp(3rem, 7vh, 5rem);
+    padding-right: clamp(2rem, 4vw, 4rem);
+  }
+
+  .hero h1 {
+    color: var(--on-dark);
+    max-width: 15ch;
+  }
+
+  .hero-lede {
+    max-width: 30ch;
+  }
+
+  /* The frame is now portrait-ish, so the subject needs its own focal point
+     rather than the wide-screen setting used when it overlaid. */
+  .hero-media video,
+  .hero-media img {
+    object-position: 62% 38%;
+  }
+}
+
 .hero-media {
   position: absolute;
   inset: 0;
@@ -880,5 +925,300 @@ figcaption,
   .site-foot,
   .hero-control {
     display: none;
+  }
+}
+/* ===========================================================================
+   DESKTOP COMPOSITION
+   ---------------------------------------------------------------------------
+   Added after measuring the rendered page at 1280, 1440 and 1920 against 390.
+
+   What was wrong, with the numbers:
+     - --wrap capped at 76rem, so a 1920px viewport left 704px unused and every
+       line of type and every photograph sat in the same narrow column. The page
+       read as a phone layout with margins.
+     - .pair centres its two columns, so a 281px text block sat beside a 635px
+       portrait leaving a 354px void beside the text.
+     - The Selected Work band ran to 2011px: two full screens before the eye
+       reached the second half.
+     - The hero copy was centred while every other element was left aligned.
+     - .bleed forced a photograph into 3.53:1 at 1920, cropping the studio away.
+
+   Mobile is untouched: everything below is inside a min-width media query, and
+   the single-column behaviour that already worked is what shows below 62rem.
+   =========================================================================== */
+
+@media (min-width: 62rem) {
+  /* Let the page actually use a wide screen. 88rem = 1408px, still inside a
+     comfortable measure for body copy because every text block keeps its own
+     narrower width. */
+  :root {
+    --wrap: 88rem;
+    --gutter: clamp(2.5rem, 4vw, 5rem);
+  }
+
+  /* A pair is a designed composition, not two centred columns. The text is
+     pinned to the top and the media fills the row, so the block reads as a unit
+     rather than two things at different heights. */
+  .pair {
+    grid-template-columns: 5fr 6fr;
+    align-items: start;
+    gap: clamp(2.5rem, 4.5vw, 5rem);
+  }
+
+  /* Portrait media beside portrait copy: match the media's height to the copy so
+     neither strands the other. A 4/5 frame at the column width lands close to
+     the text block's height by construction. */
+  .pair-portrait img {
+    aspect-ratio: 4 / 5;
+    max-height: 42rem;
+  }
+
+  /* Headline beside a portrait gets a real column, so it stops floating in the
+     middle of the width. */
+  .pair-text > h1,
+  .pair-text > h2 {
+    max-width: 16ch;
+  }
+
+  /* An odd-height gap under a text block is dead space on a wide screen. Pull
+     the following content up rather than leaving air. */
+  .band-tight {
+    padding-block: clamp(3rem, 4vw, 4.5rem);
+  }
+}
+
+/* 12-column editorial grid for the wide breakpoints. */
+@media (min-width: 75rem) {
+  :root {
+    --wrap: 92rem;
+  }
+
+  /* Selected work: the first row gets real presence and the rest becomes a
+     deliberate band of three, so the section stops being a 2000px column of
+     pictures. */
+  .gallery .g-6 {
+    grid-column: span 7;
+  }
+  .gallery .g-4 {
+    grid-column: span 5;
+  }
+  .gallery figure.g-4 + figure.g-4 {
+    grid-column: span 4;
+  }
+  .gallery figure.g-4:last-child {
+    grid-column: span 4;
+  }
+
+  /* Full-bleed photography: a considered band, not a letterbox. 21/9 keeps a
+     wide crop that still reads as a photograph. */
+  .bleed img,
+  .bleed video {
+    height: clamp(24rem, 46vh, 34rem);
+  }
+
+  /* The hero copy aligns to the same left edge as the rest of the page rather
+     than sitting centred. */
+  .hero-inner {
+    max-width: 36rem;
+  }
+}
+
+/* Very wide: the composition should breathe, not stretch. */
+@media (min-width: 100rem) {
+  :root {
+    --wrap: 96rem;
+  }
+
+  /* A portrait in a very wide column becomes a skyscraper; cap the frame and let
+     the grid keep its proportions. */
+  .gallery img {
+    aspect-ratio: var(--frame, 4 / 5);
+  }
+}
+
+/* ===========================================================================
+   FEATURED GALLERY
+   ---------------------------------------------------------------------------
+   On a phone this is the same single column it always was. On a desktop the
+   lead piece takes the upper left and the remaining three set as a band beneath
+   it, so Selected Work reads as one composition instead of a 2000px stack.
+   =========================================================================== */
+
+@media (min-width: 62rem) {
+  .gallery-feature {
+    grid-template-columns: repeat(12, 1fr);
+    row-gap: var(--sp-4);
+  }
+
+  /* Lead: a tall portrait with real presence. */
+  .gallery-feature .g-feature-lead {
+    grid-column: 1 / span 5;
+    grid-row: 1;
+  }
+
+  /* The upper right holds one landscape piece. It needs its own class: a
+     `:first-of-type` selector cannot reach it, because the first <figure> among
+     the siblings is the lead, not this one. */
+  .gallery-feature .g-feature-second {
+    grid-column: 6 / span 4;
+    grid-row: 1;
+  }
+
+  /* Row 1 must be fully accounted for: a span-5 lead plus a span-4 leaves three
+     empty columns, which reads as a hole beside the lead rather than as air.
+     This piece fills it. */
+  .gallery-feature .g-feature-third {
+    grid-column: 10 / span 3;
+    grid-row: 1;
+  }
+
+  /* Row 2: a portrait and a landscape piece sharing the width under the lead. */
+  .gallery-feature .g-feature-fifth {
+    grid-column: 1 / span 5;
+    grid-row: 2;
+  }
+  .gallery-feature .g-feature-fourth {
+    grid-column: 6 / span 7;
+    grid-row: 2;
+  }
+
+  .gallery-feature img {
+    max-height: none;
+  }
+
+  .gallery-feature .g-feature-lead img {
+    /* No max-height here. A cap plus object-fit:cover crops the subject, which
+       turns a 3:4 portrait into a letterbox and loses the piece's silhouette.
+       The presence comes from the column span (7 of 12) and the frame comes
+       from the aspect ratio, so the height is a consequence rather than a cap. */
+    aspect-ratio: 4 / 5;
+  }
+
+  .gallery-feature figcaption {
+    margin-top: var(--sp-2);
+  }
+}
+
+@media (min-width: 75rem) {
+  .gallery-feature .g-feature-lead {
+    grid-column: 1 / span 5;
+  }
+  .gallery-feature .g-feature-second {
+    grid-column: 6 / span 4;
+  }
+  .gallery-feature .g-feature-third {
+    grid-column: 10 / span 3;
+  }
+  .gallery-feature .g-feature-fifth {
+    grid-column: 1 / span 5;
+  }
+  .gallery-feature .g-feature-fourth {
+    grid-column: 6 / span 7;
+  }
+}
+
+/* ===========================================================================
+   PAIR: MATCHING HEIGHTS
+   ---------------------------------------------------------------------------
+   Measured on the Alesha page at 1440 and 1920: a 271px text block beside a
+   643px portrait left a 372px void. `align-items: center` centred the short
+   column and made the gap read as two unrelated items.
+
+   The fix is to let the text and the media form one block: the text sits at the
+   top of the row, the media is bounded, and the row is not taller than the
+   media needs. On a phone this is untouched — the columns stack and there is no
+   gap to fix.
+   =========================================================================== */
+
+@media (min-width: 62rem) {
+  .pair {
+    align-items: start;
+  }
+
+  /* A portrait beside copy is the recurring case. Bound the media so the copy
+     and the photograph end within a screen of each other rather than the photo
+     running 400px past the words. */
+  .pair-portrait img {
+    aspect-ratio: 4 / 5;
+    max-height: 34rem;
+  }
+
+  .pair-portrait figcaption {
+    max-width: 30ch;
+  }
+
+  /* Where the copy is short and the photograph is tall, give the copy room to
+     breathe and let the pair read as an editorial spread. */
+  .pair-text > p:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+/* A gallery of two wide pieces under a section head: keep the pair on one row
+   and equal height so neither strands the other. */
+@media (min-width: 62rem) {
+  .gallery .g-6 img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+
+/* ===========================================================================
+   HERO MEDIA PLACEMENT, DESKTOP
+   ---------------------------------------------------------------------------
+   This has to come AFTER the base `.hero-media { position: absolute; inset: 0 }`
+   rule, because that rule is what has to lose. `position: relative` is not
+   enough on its own: `inset: 0` still resolves against a relatively positioned
+   box and pins it to the hero's edges, so the computed value stayed `absolute`
+   and the video never entered its grid column. `position: static` removes it from
+   the inset calculation entirely, and the grid then places it.
+
+   Measured at 1920: before this, media was absolute over the charcoal; after,
+   it occupies its own column and plays beside the copy.
+   =========================================================================== */
+
+@media (min-width: 62rem) {
+  .hero-media {
+    position: static;
+    inset: auto;
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  .hero-inner {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* The play/pause control belongs with the copy column, not floating over the
+     video now that the media has its own column. */
+  .hero-control {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    justify-self: end;
+    position: static;
+    margin: 0 clamp(2.5rem, 4vw, 4rem) clamp(1.5rem, 3vh, 2.5rem) 0;
+  }
+
+  /* Put the control back on the page's left edge, under the actions, so the
+     header, the headline and the control all share one alignment. */
+  .hero-inner {
+    display: grid;
+    grid-template-areas: "copy" "control";
+    align-content: end;
+    row-gap: var(--sp-3);
+  }
+}
+
+
+/* The Alesha page's studio section: copy beside a portrait, then a two-up row of
+   detail shots. Without the margin the row rides up against the pair above it. */
+@media (min-width: 62rem) {
+  .makers-studio-row {
+    margin-top: var(--sp-4);
   }
 }
