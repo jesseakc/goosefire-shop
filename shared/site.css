@@ -1355,3 +1355,81 @@ figcaption,
   max-width: 52ch;
   text-align: center;
 }
+
+/* --- category rows (pigs / ornaments / planters) ------------------------- */
+
+.cat-row {
+  list-style: none;
+  margin: 0 0 var(--sp-4);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+
+.cat-row a {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.2;
+  color: var(--paper-text);
+  text-decoration: none;
+  border-top: 2px solid var(--terracotta);
+  padding-top: var(--sp-2);
+}
+
+.cat-row a:hover {
+  color: var(--terracotta-deep);
+}
+
+.cat-row span {
+  display: block;
+  margin-top: var(--sp-1);
+  font-size: var(--step--1);
+  color: var(--paper-mute);
+  max-width: 34ch;
+}
+
+.band-dark .cat-row a {
+  color: var(--on-dark);
+}
+
+.band-dark .cat-row span {
+  color: var(--on-dark-mute);
+}
+
+.cat-row-lead {
+  margin-bottom: var(--sp-5);
+}
+
+@media (max-width: 52rem) {
+  .cat-row {
+    grid-template-columns: 1fr;
+    gap: var(--sp-2);
+  }
+}
+
+/* --- numbered question list (planters page) ------------------------------- */
+
+.steps-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.steps-list li {
+  counter-increment: qlist;
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: var(--sp-2);
+  color: var(--on-dark-mute);
+}
+
+.steps-list li::before {
+  content: counter(qlist);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-display);
+  color: var(--kiln);
+}
