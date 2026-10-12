@@ -1407,6 +1407,13 @@ figcaption,
     grid-template-columns: 1fr;
     gap: var(--sp-2);
   }
+
+  /* Measured 39px tall at 390, under the ~44px comfortable touch target.
+     0.7rem of padding lands the rendered box at 46px. */
+  .cat-row a {
+    padding-block: 0.7rem;
+    margin-block: -0.7rem;
+  }
 }
 
 /* --- numbered question list (planters page) ------------------------------- */
