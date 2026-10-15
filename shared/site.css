@@ -187,8 +187,8 @@ p {
 
 figcaption,
 .caption {
-  font-size: var(--step--1);
-  line-height: 1.55;
+  font-size: var(--step-0);
+  line-height: 1.6;
   color: var(--paper-mute);
   margin: var(--sp-2) 0 0;
   /* Wide enough not to break into two cramped lines inside a narrow gallery
@@ -1518,4 +1518,43 @@ figcaption,
 @media (min-width: 100rem) {
   :root { --step-0: 1.19rem; --step-1: 1.6rem; --step-2: 2.1rem; --step-3: 3.05rem; --step-4: 5.35rem; }
   .pair-portrait img { max-height: 46rem; }
+}
+
+/* --- Uniform gallery grid ---------------------------------------------------
+   Owner direction, 2026-10-15: the staggered editorial spans retired. Every
+   gallery renders as equal columns with one frame ratio, centered crops,
+   rounded corners, and captions that line up across the row. The !important
+   flags retire the span and aspect rules above in one place rather than
+   editing each of them; nothing outside .gallery is affected. */
+:root { --radius: 0.75rem; }
+
+@media (min-width: 62rem) {
+  .gallery, .gallery-feature { grid-template-columns: repeat(3, 1fr) !important; }
+  .gallery > figure, .gallery-feature > figure { grid-column: auto !important; grid-row: auto !important; }
+}
+@media (min-width: 46rem) and (max-width: 62rem) {
+  .gallery, .gallery-feature { grid-template-columns: repeat(2, 1fr) !important; }
+  .gallery > figure, .gallery-feature > figure { grid-column: auto !important; grid-row: auto !important; }
+}
+@media (max-width: 46rem) {
+  .gallery > figure, .gallery-feature > figure { grid-column: auto !important; grid-row: auto !important; }
+}
+.gallery img, .gallery-feature img {
+  aspect-ratio: 4 / 5 !important; object-fit: cover !important;
+  max-height: none !important; object-position: center;
+  border-radius: var(--radius);
+}
+
+/* Rounded corners for every framed image that is not edge-to-edge. Full-bleed
+   bands stay square on purpose: their corners ARE the page corners. */
+.pair img, .clip img, .article-illustration img { border-radius: var(--radius); }
+.cat-card { border-radius: var(--radius); }
+.cat-card img { aspect-ratio: 4 / 5; }
+.shelf-frame { border-radius: var(--radius); }
+
+/* Four-item galleries (homepage and work): a 3-column grid leaves one figure
+   stranded in a second row, which reads as ragged rather than rhythmic. Two
+   equal columns fill both rows exactly. */
+@media (min-width: 62rem) {
+  .gallery.gallery-two { grid-template-columns: repeat(2, 1fr) !important; }
 }
