@@ -573,8 +573,8 @@ figcaption,
      portrait to 1900px, which is exactly the empty band this page had. */
   width: 100%;
   /* A full-bleed band is a crop, so the frame has to suit the photograph.
-     bench_wide is 3:4 portrait; forcing it into a letterbox cropped 71% of it
-     and cut the subject's head out of frame. .bleed-wide takes a panoramic
+     A 3:4 portrait forced into a letterbox cropped 71% of it and cut the
+     subject's head out of frame. .bleed-wide takes a panoramic
      frame for genuinely wide photographs and .bleed-tall keeps a portrait
      readable; each page picks the one that matches its own image. */
   height: clamp(20rem, 44vw, 40rem);
@@ -1440,3 +1440,9 @@ figcaption,
   font-family: var(--font-display);
   color: var(--kiln);
 }
+
+/* In-column editorial illustration: an AI-generated image sits inside the
+   article flow like the documentary figures do, but narrower, so it reads as
+   an accent rather than a claim of documentation. */
+.article-illustration { max-width: 60rem; margin: var(--sp-4) auto; padding: 0 var(--gutter); }
+.article-illustration img { border-radius: 2px; }
