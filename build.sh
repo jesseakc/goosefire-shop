@@ -33,10 +33,41 @@ for page in index.html 404.html sitemap.xml robots.txt; do
   [ -f "$page" ] && cp "$page" "$OUT/"
 done
 
-# 2. Directories that make up the public site.
-for dir in brand media shared; do
+# 2. Directories that make up the public site. media is copied
+#    SELECTIVELY below (whole-dir copies once published unapproved photos
+#    that simply sat in a referenced folder); brand and shared are whole-tree
+#    and contain only published assets.
+for dir in brand shared; do
   [ -d "$dir" ] && cp -R "$dir" "$OUT/"
 done
+
+# 2b. media: only files the pages and code actually reference (src, srcset,
+#     poster, og:image in HTML; fallback poster paths in CSS/JS). Anything
+#     not named never reaches a public URL. Whole-dir copies once published
+#     unapproved photos that merely sat in a referenced folder.
+mkdir -p "$OUT/media"
+# -I skips binaries (.git objects, image files). CSS uses the same /media/
+# paths for the no-JS hero poster fallback, so it must be scanned too.
+grep -rhoI --include='*.html' --include='*.css' --include='*.js' \
+    -E '/media/[A-Za-z0-9_./-]+' . \
+  | sed -E 's/^\///' | sort -u > /tmp/gf_media_refs.txt
+published_media=0
+missing_media=0
+while IFS= read -r ref; do
+  if [ ! -f "$ref" ]; then
+    echo "WARN: referenced media missing on disk: $ref" >&2
+    missing_media=$((missing_media + 1))
+    continue
+  fi
+  mkdir -p "$OUT/$(dirname "$ref")"
+  cp "$ref" "$OUT/$ref"
+  published_media=$((published_media + 1))
+done < /tmp/gf_media_refs.txt
+rm -f /tmp/gf_media_refs.txt
+if [ "$missing_media" -gt 0 ]; then
+  echo "ERROR: $missing_media referenced media file(s) missing — refusing to publish." >&2
+  exit 1
+fi
 
 # 3. One directory per inner page.
 for dir in makers work process journal contact; do
