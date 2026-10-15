@@ -70,7 +70,7 @@ if [ "$missing_media" -gt 0 ]; then
 fi
 
 # 3. One directory per inner page.
-for dir in makers work process journal contact; do
+for dir in makers work process journal faq contact; do
   [ -d "$dir" ] && cp -R "$dir" "$OUT/"
 done
 

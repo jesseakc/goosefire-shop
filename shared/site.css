@@ -1446,3 +1446,76 @@ figcaption,
    an accent rather than a claim of documentation. */
 .article-illustration { max-width: 60rem; margin: var(--sp-4) auto; padding: 0 var(--gutter); }
 .article-illustration img { border-radius: 2px; }
+
+/* --- Icon sprite (brand/icons.svg) -----------------------------------------
+   Line icons drawn for the studio: 24x24, stroke 1.5, painted by context
+   through currentColor so they sit on both paper and charcoal. */
+.icon { width: 1.5em; height: 1.5em; flex: none; vertical-align: -0.25em;
+        fill: none; stroke: currentColor; }
+
+/* --- Category cards (homepage + work) --------------------------------------
+   The three ways into the work used to be three columns of bare text; at
+   desktop width that read as a placeholder. Cards give each lane a picture,
+   a frame, and a place for the eye to land. */
+.cat-card { border: 1px solid var(--line); border-radius: 8px;
+            overflow: hidden; background: var(--ivory);
+            transition: border-color 0.2s ease; }
+.cat-card:hover { border-color: var(--terracotta); }
+.cat-card a { display: block; text-decoration: none; color: inherit; }
+.cat-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.cat-card-body { display: grid; gap: var(--sp-1); padding: var(--sp-2) var(--sp-3) var(--sp-3); }
+.cat-card-body strong { font-family: var(--font-display); font-size: var(--step-1); line-height: 1.2; }
+.cat-card-body span { font-size: var(--step--1); color: var(--paper-mute); }
+.cat-card-body em { font-style: normal; font-size: var(--step--1); color: var(--terracotta-deep); margin-top: var(--sp-1); }
+.cat-card:hover .cat-card-body em { color: var(--terracotta); }
+
+/* --- The four steps (homepage) -------------------------------------------- */
+.steps { list-style: none; margin: 0 0 var(--sp-4); padding: 0;
+         display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); }
+.steps li { display: grid; gap: var(--sp-1); align-content: start; }
+.steps .icon { width: 2.1rem; height: 2.1rem; color: var(--terracotta);
+               margin-bottom: var(--sp-2); }
+.steps strong { font-family: var(--font-display); font-size: var(--step-1); line-height: 1.2; }
+.steps span { font-size: var(--step--1); color: var(--paper-mute); max-width: 30ch; }
+
+/* --- The shelf (product photography, on its way) --------------------------
+   Honest placeholder frames: dashed, quiet, and clearly waiting for real
+   photographs rather than pretending to have products. */
+.shelf { list-style: none; margin: 0 0 var(--sp-4); padding: 0;
+         display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
+.shelf-frame { aspect-ratio: 4 / 3; border: 1.5px dashed var(--line);
+               border-radius: 8px; display: grid; place-content: center;
+               justify-items: center; gap: var(--sp-1); text-align: center;
+               padding: var(--sp-3); color: var(--paper-faint); }
+.shelf-frame .icon { width: 2.1rem; height: 2.1rem; color: var(--terracotta); opacity: 0.8; }
+.shelf-frame strong { font-size: var(--step--1); color: var(--paper-mute); }
+.shelf-frame span { font-size: var(--step--1); }
+
+/* --- FAQ accordion ---------------------------------------------------------
+   details/summary: no JavaScript, keyboard and screen-reader friendly. */
+.faq-list { border-top: 1px solid var(--line); margin-bottom: var(--sp-4); }
+.faq-list details { border-bottom: 1px solid var(--line); }
+.faq-list summary { display: flex; justify-content: space-between; align-items: baseline;
+                    gap: var(--sp-2); padding: var(--sp-3) 0; cursor: pointer;
+                    list-style: none; font-family: var(--font-display);
+                    font-size: var(--step-1); line-height: 1.25; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after { content: "+"; font-family: var(--font-text); font-size: 1.3em;
+                           line-height: 1; color: var(--terracotta); flex: none; }
+.faq-list details[open] summary::after { content: "\2212"; }
+.faq-a { padding: 0 0 var(--sp-3); max-width: 62ch; color: var(--paper-mute); }
+.faq-a p { margin: 0; }
+
+@media (max-width: 46rem) {
+  .steps { grid-template-columns: repeat(2, 1fr); }
+  .shelf { grid-template-columns: 1fr; }
+}
+
+/* --- Big screens: type keeps growing past the wrap -------------------------
+   At 1600px and up the page is a 96rem column in wide margins. The clamps
+   above have all capped by then; these lift them so the page does not
+   shrink into a narrow ribbon of small text on a large display. */
+@media (min-width: 100rem) {
+  :root { --step-0: 1.19rem; --step-1: 1.6rem; --step-2: 2.1rem; --step-3: 3.05rem; --step-4: 5.35rem; }
+  .pair-portrait img { max-height: 46rem; }
+}
